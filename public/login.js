@@ -61,7 +61,7 @@ registerForm.addEventListener('submit', async (e) => {
     const regSuccessMessage = document.getElementById('regSuccessMessage');
 
     try {
-        const respuesta = await fetch('http://localhost:3000/api/registro', {
+        const respuesta = await fetch('/api/registro', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             // Enviamos el rol por defecto como "cliente"
