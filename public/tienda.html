@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Premium - CFDM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header" id="headerPrincipal">
+        <div class="header-top">
+            <div class="header-message">
+                <span>Si no cuentas con PayPal, mándanos un WhatsApp presionando el botón inferior.</span>
+            </div>
+            <div class="header-icons">
+                <div class="icon-wrapper" id="btnAbrirCarrito">
+                    <i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>
+                    <span class="badge" id="carritoContador">0</span>
+                </div>
+                <div class="icon-wrapper" style="margin-left: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-user" id="iconoDefaultHeader" style="margin-right: 8px;"></i>
+                    <img id="imgPerfilHeader" src="" alt="Perfil" style="display: none; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; border: 1px solid white;">
+                    <a href="perfil.html" id="lblNombreUsuario" style="color: #fff; text-decoration: none; font-weight: bold; margin-right: 15px;">Mi Perfil</a>
+                    <button class="btn-logout-small" id="btnCerrarSesion">Salir</button>
+                </div>
+                <div class="menu-toggle" id="btnMenuMovil">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <nav class="main-nav" id="navMenu">
+                <a href="#" class="nav-tab active" id="tabInicio">INICIO</a>
+                <a href="#" class="nav-tab" id="tabCursos">CURSOS</a>
+                <a href="#" class="nav-tab" id="tabTienda">TIENDA</a>
+                <a href="nosotros.html" class="nav-tab">QUIÉNES SOMOS</a>
+                <a href="admin.html" class="nav-tab admin-tab" id="tabAdmin" style="display: none;">PANEL ADMIN</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="home-hero-banner" id="seccionInicio">
+        <h1>Centro de Farmacología Deportiva Mexicana</h1>
+        <p>Los mejores productos para tu físico</p>
+        <button class="btn-banner-outline" id="btnHeroComprar">COMPRAR</button>
+    </section>
+
+    <section id="seccionAccesos" class="categorias-acceso-premium">
+        <div class="tarjeta-premium" onclick="irACategoria('suplemento', 'Suplementos Deportivos')">
+            <div class="patron-fondo"></div>
+            <div class="contenido-premium">
+                <i class="fas fa-dumbbell"></i>
+                <h2>Suplementos</h2>
+                <span>Rendimiento</span>
+            </div>
+        </div>
+        <div class="tarjeta-premium" onclick="irACategoria('farmaco', 'Fármacos')">
+            <div class="patron-fondo"></div>
+            <div class="contenido-premium">
+                <i class="fas fa-prescription-bottle-alt"></i>
+                <h2>Fármacos</h2>
+                <span>Desarrollo</span>
+            </div>
+        </div>
+        <div class="tarjeta-premium" onclick="irACategoria('libro', 'Libros Especializados')">
+            <div class="patron-fondo"></div>
+            <div class="contenido-premium">
+                <i class="fas fa-book"></i>
+                <h2>Libros</h2>
+                <span>Conocimiento</span>
+            </div>
+        </div>
+        <div class="tarjeta-premium" onclick="document.getElementById('tabCursos').click()">
+            <div class="patron-fondo"></div>
+            <div class="contenido-premium">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>Cursos</h2>
+                <span>Farmacologías</span>
+            </div>
+        </div>
+    </section>
+
+    <main id="mainCatalogo" style="min-height: 50vh; display: none;">
+        <h2 class="page-header-title" id="tituloSeccion">Nuestro Catálogo</h2>
+        
+        <div class="filtros-tienda" id="contenedorFiltros">
+            <button class="btn-filtro active" data-categoria="suplemento">Suplementos</button>
+            <button class="btn-filtro" data-categoria="farmaco">Fármacos</button>
+            <button class="btn-filtro" data-categoria="libro">Libros</button>
+            
+            <span style="color: #444; margin: 0 10px;">|</span>
+
+            <select id="filtroPrecio" class="select-premium">
+                <option value="todos">Cualquier Precio</option>
+                <option value="0-500">Menos de $500 MXN</option>
+                <option value="500-1000">De $500 a $1000 MXN</option>
+                <option value="1000-999999">Más de $1000 MXN</option>
+            </select>
+        </div>
+
+        <div class="product-grid" id="contenedorProductos">
+            </div>
+    </main>
+
+    <div class="cart-sidebar" id="sidebarCarrito">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-btn" id="btnCerrarCarrito">&times;</button>
+        </div>
+        <div class="cart-items" id="itemsCarrito">
+            <p id="carritoVacioTexto" style="text-align: center; color: #888; margin-top: 30px;">Tu carrito está vacío.</p>
+        </div>
+        <div class="cart-footer">
+            <h3 style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.2rem; color: #fff;">
+                <span>Total:</span>
+                <span id="carritoTotal" style="color: #c5a059;">$0.00 MXN</span>
+            </h3>
+            <div id="seccionEnvio" style="display: none; border-top: 1px dashed #444; padding-top: 15px; margin-bottom: 15px;">
+                <h4 style="color: #c5a059; margin-top: 0; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;"><i class="fas fa-truck"></i> Datos de Envío</h4>
+                <div style="margin-bottom: 12px;">
+                    <label style="font-size: 0.85rem; font-weight: bold; color: #ccc; display: block; margin-bottom: 4px; text-transform: uppercase;">Teléfono de Contacto</label>
+                    <input type="text" id="envioTelefono" placeholder="Ej. 229 123 4567">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 0.85rem; font-weight: bold; color: #ccc; display: block; margin-bottom: 4px; text-transform: uppercase;">Dirección Completa</label>
+                    <textarea id="envioDireccion" rows="3" placeholder="Veracruz, Ver. Calle Ejemplo #123..."></textarea>
+                </div>
+                <button class="btn-primary" id="btnConfirmarPedido" style="width: 100%;">Confirmar Pedido</button>
+            </div>
+            <button class="btn-primary" id="btnProcederPago" style="width: 100%;">Proceder al Pago</button>
+        </div>
+    </div>
+
+    <footer class="footer-contact">
+        <h3>CONTÁCTANOS</h3>
+        <div class="social-links">
+            <a href="https://www.facebook.com/people/Centro-de-Farmacologia-Deportiva-Mexicana/61560281514265/" target="_blank">
+                <i class="fab fa-facebook"></i> Centro de Farmacologia Deportiva Mexicana
+            </a>
+            <a href="https://www.instagram.com/cfdm.farmacologia/" target="_blank">
+                <i class="fab fa-instagram"></i> cfdm.farmacologia
+            </a>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/522291234567" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        // LOGICA DE INTERFAZ GENERAL
+        const sidebar = document.getElementById('sidebarCarrito');
+        const btnAbrir = document.getElementById('btnAbrirCarrito');
+        const btnCerrar = document.getElementById('btnCerrarCarrito');
+        const btnPago = document.getElementById('btnProcederPago');
+        const seccionEnvio = document.getElementById('seccionEnvio');
+
+        // NUEVO: Funcionalidad del Menú de Hamburguesa para Celulares
+        const btnMenuMovil = document.getElementById('btnMenuMovil');
+        const navMenu = document.getElementById('navMenu');
+
+        if (btnMenuMovil) {
+            btnMenuMovil.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+        // Cerrar menú al elegir una opción en móvil
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                if(window.innerWidth <= 768) { navMenu.classList.remove('active'); }
+            });
+        });
+
+        if (btnAbrir && sidebar) btnAbrir.addEventListener('click', () => sidebar.classList.add('active'));
+        if (btnCerrar && sidebar) {
+            btnCerrar.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                if (seccionEnvio) seccionEnvio.style.display = 'none';
+                if (btnPago) btnPago.style.display = 'block';
+            });
+        }
+        if (btnPago && seccionEnvio) {
+            btnPago.addEventListener('click', () => {
+                if (document.getElementById('carritoTotal').textContent !== '$0.00 MXN') {
+                    seccionEnvio.style.display = 'block';
+                    btnPago.style.display = 'none';
+                } else {
+                    alert('🛒 Tu carrito está vacío.');
+                }
+            });
+        }
+
+        const sesion = JSON.parse(localStorage.getItem('sesionActiva'));
+        if (sesion) {
+            document.getElementById('lblNombreUsuario').textContent = `Mi Perfil (${sesion.nombre})`;
+            const iconoDefault = document.getElementById('iconoDefaultHeader');
+            const imgPerfil = document.getElementById('imgPerfilHeader');
+            if (sesion.fotoPerfil && sesion.fotoPerfil !== '') {
+                iconoDefault.style.display = 'none';
+                imgPerfil.src = sesion.fotoPerfil;
+                imgPerfil.style.display = 'block';
+            }
+            if (sesion.rol === 'admin') document.getElementById('tabAdmin').style.display = 'block';
+            if (sesion.telefono) document.getElementById('envioTelefono').value = sesion.telefono;
+            if (sesion.direccion) document.getElementById('envioDireccion').value = sesion.direccion;
+        } else {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('btnCerrarSesion').addEventListener('click', () => {
+            localStorage.removeItem('sesionActiva');
+            window.location.href = 'index.html';
+        });
+
+        // LOGICA DE PESTAÑAS Y FILTROS
+        const tabInicio = document.getElementById('tabInicio');
+        const tabCursos = document.getElementById('tabCursos');
+        const tabTienda = document.getElementById('tabTienda');
+        const hero = document.getElementById('seccionInicio');
+        const accesos = document.getElementById('seccionAccesos');
+        const mainCat = document.getElementById('mainCatalogo');
+        const tituloS = document.getElementById('tituloSeccion');
+        const filtros = document.getElementById('contenedorFiltros');
+
+        function cambiarPestanaActiva(tabSeleccionada) {
+            [tabInicio, tabCursos, tabTienda].forEach(t => t.classList.remove('active'));
+            tabSeleccionada.classList.add('active');
+        }
+
+        window.filtrarVistaActual = function() {
+            const tarjetas = document.querySelectorAll('#contenedorProductos > div');
+            const esCursosActivo = document.getElementById('tabCursos').classList.contains('active');
+            const botonActivo = document.querySelector('.btn-filtro.active');
+            const filtroTienda = botonActivo ? botonActivo.getAttribute('data-categoria') : 'suplemento';
+            const selectFiltroPrecio = document.getElementById('filtroPrecio');
+            const rangoPrecio = selectFiltroPrecio ? selectFiltroPrecio.value : 'todos';
+
+            tarjetas.forEach(tarjeta => {
+                const categoria = tarjeta.getAttribute('data-categoria');
+                const precio = parseFloat(tarjeta.getAttribute('data-precio') || 0);
+
+                let cumpleCategoria = false;
+                if (esCursosActivo) { cumpleCategoria = (categoria === 'curso'); } 
+                else { cumpleCategoria = (categoria !== 'curso' && categoria === filtroTienda); }
+
+                let cumplePrecio = true;
+                if (rangoPrecio !== 'todos') {
+                    const limites = rangoPrecio.split('-');
+                    if (precio < parseFloat(limites[0]) || precio > parseFloat(limites[1])) {
+                        cumplePrecio = false;
+                    }
+                }
+                tarjeta.style.display = (cumpleCategoria && cumplePrecio) ? 'block' : 'none';
+            });
+        };
+
+        window.irACategoria = function(categoria, titulo) {
+            cambiarPestanaActiva(tabTienda);
+            hero.style.display = 'none';
+            accesos.style.display = 'none';
+            mainCat.style.display = 'block';
+            tituloS.textContent = titulo;
+            filtros.style.display = 'flex';
+
+            document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('active'));
+            const btnSeleccionado = document.querySelector(`.btn-filtro[data-categoria="${categoria}"]`);
+            if (btnSeleccionado) btnSeleccionado.classList.add('active');
+
+            if(document.getElementById('filtroPrecio')) document.getElementById('filtroPrecio').value = 'todos';
+
+            window.filtrarVistaActual();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        tabInicio.addEventListener('click', (e) => {
+            e.preventDefault(); cambiarPestanaActiva(tabInicio);
+            hero.style.display = 'block'; accesos.style.display = 'flex'; mainCat.style.display = 'none'; 
+        });
+
+        tabTienda.addEventListener('click', (e) => { 
+            e.preventDefault(); irACategoria('suplemento', 'Suplementos Deportivos'); 
+        });
+        document.getElementById('btnHeroComprar').addEventListener('click', () => {
+            irACategoria('suplemento', 'Suplementos Deportivos');
+        });
+
+        tabCursos.addEventListener('click', (e) => {
+            e.preventDefault(); cambiarPestanaActiva(tabCursos);
+            hero.style.display = 'none'; accesos.style.display = 'none'; mainCat.style.display = 'block';
+            tituloS.textContent = 'Cursos Especializados';
+            filtros.style.display = 'flex'; 
+            
+            document.querySelectorAll('.btn-filtro').forEach(b => b.style.display = 'none');
+            const separador = document.querySelector('#contenedorFiltros span');
+            if(separador) separador.style.display = 'none';
+
+            if(document.getElementById('filtroPrecio')) document.getElementById('filtroPrecio').value = 'todos';
+            window.filtrarVistaActual(); 
+        });
+
+        const botonesFiltro = document.querySelectorAll('.btn-filtro');
+        botonesFiltro.forEach(boton => {
+            boton.addEventListener('click', () => {
+                botonesFiltro.forEach(b => b.classList.remove('active')); boton.classList.add('active');
+                
+                const cat = boton.getAttribute('data-categoria');
+                if (cat === 'suplemento') tituloS.textContent = 'Suplementos Deportivos';
+                if (cat === 'farmaco') tituloS.textContent = 'Fármacos';
+                if (cat === 'libro') tituloS.textContent = 'Libros Especializados';
+
+                if(document.getElementById('filtroPrecio')) document.getElementById('filtroPrecio').value = 'todos';
+                window.filtrarVistaActual(); 
+            });
+        });
+
+        const selectFiltroPrecio = document.getElementById('filtroPrecio');
+        if(selectFiltroPrecio) selectFiltroPrecio.addEventListener('change', () => { window.filtrarVistaActual(); });
+    </script>
+    <script src="tienda.js"></script>
+</body>
+</html>

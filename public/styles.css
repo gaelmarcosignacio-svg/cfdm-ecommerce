@@ -1,0 +1,166 @@
+/* =========================================
+   1. ESTILOS GENERALES Y NAVEGACIÓN
+   ========================================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0; 
+    background-color: #0f0f0f; 
+    color: #eaeaea; 
+}
+.main-header { background: #050505; border-bottom: 1px solid #222; position: relative; }
+.header-top { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; }
+.header-message { font-size: 0.9rem; color: #aaa; }
+.header-icons { display: flex; align-items: center; gap: 15px; }
+.icon-wrapper { cursor: pointer; display: flex; align-items: center; color: #fff; }
+.badge { background: #c5a059; color: #000; padding: 2px 6px; border-radius: 50%; font-size: 0.8rem; margin-left: 5px; font-weight: bold; }
+.btn-logout-small { background: transparent; color: #e74c3c; border: 1px solid #e74c3c; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-left: 10px; transition: 0.3s; }
+.btn-logout-small:hover { background: #e74c3c; color: white; }
+
+/* NUEVO: Botón Menú Hamburguesa (Oculto por defecto en PC) */
+.menu-toggle { display: none; font-size: 1.5rem; color: #c5a059; cursor: pointer; margin-left: 10px; }
+
+.header-bottom { background: #0a0a0a; padding: 10px 30px; }
+.main-nav { display: flex; gap: 15px; transition: 0.3s; }
+.nav-tab { color: #ccc; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+.nav-tab:hover, .nav-tab.active { background: #c5a059; color: #000; font-weight: bold; }
+.admin-tab { background: transparent; border: 1px solid #c5a059; color: #c5a059; }
+
+/* =========================================
+   2. HERO BANNER
+   ========================================= */
+.home-hero-banner {
+    background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470') center/cover;
+    color: white; text-align: center; padding: 120px 20px; border-bottom: 1px solid #222;
+}
+.home-hero-banner h1 { font-size: 3rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 4px; color: #c5a059; }
+.home-hero-banner p { font-size: 1.5rem; margin-bottom: 30px; color: #ccc; letter-spacing: 1px; }
+.btn-banner-outline { background: transparent; border: 2px solid #c5a059; color: #c5a059; padding: 15px 40px; font-size: 1.1rem; border-radius: 5px; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; }
+.btn-banner-outline:hover { background: #c5a059; color: black; }
+
+/* =========================================
+   3. GRID DE PRODUCTOS Y TARJETAS
+   ========================================= */
+.page-header-title { text-align: center; padding: 40px; color: #c5a059; text-transform: uppercase; letter-spacing: 3px; font-size: 2rem; }
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; padding-bottom: 60px; }
+.product-stock { font-size: 0.85rem; color: #888; margin-top: 5px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+.product-stock.low { color: #e74c3c; font-weight: bold; } 
+
+/* =========================================
+   4. CARRITO (SIDEBAR OSCURO)
+   ========================================= */
+.cart-sidebar { position: fixed; top: 0; right: -100%; width: 350px; max-width: 100vw; height: 100vh; background: #111; border-left: 1px solid #333; box-shadow: -5px 0 20px rgba(0,0,0,0.8); transition: 0.3s; z-index: 1000; display: flex; flex-direction: column; color: white; }
+.cart-sidebar.active { right: 0; }
+.cart-header { background: #050505; border-bottom: 1px solid #c5a059; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+.close-btn { background: none; border: none; color: #c5a059; font-size: 1.8rem; cursor: pointer; transition: 0.3s; }
+.close-btn:hover { color: white; }
+.cart-items { padding: 20px; flex-grow: 1; overflow-y: auto; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 1px solid #333; }
+.cart-footer { padding: 20px; border-top: 1px solid #333; background: #0a0a0a; }
+.btn-primary { background: #c5a059; color: #000; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+.btn-primary:hover { background: #d4af37; transform: translateY(-2px); }
+.cart-footer input, .cart-footer textarea { width: 100%; padding: 10px; border: 1px solid #444; border-radius: 6px; box-sizing: border-box; margin-top: 4px; background: #222; color: white; }
+.cart-footer input:focus, .cart-footer textarea:focus { border-color: #c5a059; outline: none; }
+
+/* =========================================
+   5. FOOTER Y WHATSAPP
+   ========================================= */
+.footer-contact { background: #050505; color: white; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; border-top: 1px solid #222; }
+.footer-contact h3 { margin-top: 0; margin-bottom: 30px; font-size: 1.3rem; letter-spacing: 3px; text-transform: uppercase; color: #c5a059; }
+.social-links { display: flex; flex-direction: column; gap: 15px; }
+.social-links a { color: #ccc; text-decoration: none; font-size: 1rem; display: flex; align-items: center; gap: 15px; transition: color 0.3s; }
+.social-links a:hover { color: #c5a059; }
+.social-links i { font-size: 1.4rem; color: #c5a059; }
+.whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 100; transition: 0.3s; }
+.whatsapp-float:hover { transform: scale(1.1); }
+
+/* =========================================
+   6. LOGIN Y REGISTRO 
+   ========================================= */
+.login-page-wrapper { display: flex; height: 100vh; width: 100%; overflow: hidden; background: #0f0f0f; }
+.login-visual-side { flex: 1; position: relative; background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: white; text-align: center; }
+.visual-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(10,10,10, 0.9) 0%, rgba(0,0,0,0.8) 100%); z-index: 1; }
+.visual-content { position: relative; z-index: 2; padding: 40px; }
+.logo-grandota { font-size: 5rem; margin: 0; border: 2px solid #c5a059; color: #c5a059; padding: 10px 30px; border-radius: 5px; letter-spacing: 5px; }
+.visual-content p { font-size: 1.2rem; margin-top: 20px; opacity: 0.8; }
+.poweed-by { display: block; margin-top: 50px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: #c5a059; }
+.login-form-side { flex: 1; background-color: #111; display: flex; align-items: center; justify-content: center; padding: 50px; border-left: 1px solid #333; }
+.form-content-wrapper { width: 100%; max-width: 400px; }
+.form-header h2 { color: #c5a059; font-size: 2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+.form-header p { color: #888; margin-bottom: 40px; }
+.modern-input-group { margin-bottom: 25px; }
+.modern-input-group label { display: block; color: #ccc; font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+.modern-input-group label i { color: #c5a059; margin-right: 5px; }
+.modern-input-group input { width: 100%; padding: 15px; border: 1px solid #333; border-radius: 5px; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; background-color: #1a1a1a; color: white; }
+.modern-input-group input:focus { border-color: #c5a059; background-color: #222; box-shadow: 0 0 10px rgba(197, 160, 89, 0.2); outline: none; }
+.password-wrapper { position: relative; display: flex; align-items: center; }
+.password-wrapper input { padding-right: 50px; }
+.toggle-password { position: absolute; right: 15px; color: #888; cursor: pointer; font-size: 1.2rem; transition: color 0.3s; z-index: 10; }
+.toggle-password:hover { color: #c5a059; }
+.btn-modern-login { width: 100%; padding: 15px; background: #c5a059; color: #000; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; }
+.btn-modern-login:hover { background: #d4af37; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3); }
+.form-footer { margin-top: 30px; text-align: center; color: #888; font-size: 0.9rem; }
+.form-footer a { color: #c5a059; text-decoration: none; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+
+/* =========================================
+   7. BOTONES DE FILTRO Y CATEGORÍAS
+   ========================================= */
+.filtros-tienda { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; padding: 0 20px; }
+.btn-filtro { background: transparent; border: 1px solid #444; color: #888; padding: 10px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; }
+.btn-filtro:hover, .btn-filtro.active { background: #c5a059; color: #000; border-color: #c5a059; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2); }
+.select-premium { background: #111; color: #c5a059; border: 1px solid #444; padding: 10px 20px; border-radius: 5px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; outline: none; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+.select-premium:hover, .select-premium:focus { border-color: #c5a059; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2); }
+.select-premium option { background: #111; color: #eaeaea; }
+
+.categorias-acceso-premium { display: flex; flex-wrap: wrap; gap: 0; padding: 0; width: 100%; background-color: #050505; border-top: 1px solid #222; border-bottom: 1px solid #222; }
+.tarjeta-premium { flex: 1; min-width: 250px; height: 350px; position: relative; overflow: hidden; cursor: pointer; border: 1px solid rgba(197, 160, 89, 0.1); transition: all 0.5s ease; }
+.tarjeta-premium:hover { border-color: rgba(197, 160, 89, 1); z-index: 10; background: #0a0a0a; }
+.patron-fondo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com/patterns/dark-geometric.png'); opacity: 0.1; transition: opacity 0.5s ease; }
+.tarjeta-premium:hover .patron-fondo { opacity: 0.3; }
+.contenido-premium { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #c5a059; transition: all 0.5s ease; }
+.contenido-premium i { font-size: 3rem; margin-bottom: 25px; opacity: 0.8; transition: all 0.5s ease; }
+.contenido-premium h2 { margin: 0 0 10px 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 4px; font-weight: bold; }
+.contenido-premium span { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+.tarjeta-premium:hover .contenido-premium { color: white; }
+.tarjeta-premium:hover .contenido-premium i { color: #c5a059; transform: scale(1.1); opacity: 1; }
+.tarjeta-premium:hover .contenido-premium span { color: #aaa; }
+
+
+/* =========================================
+   8. MEDIA QUERIES PARA CELULARES (RESPONSIVO MÁGICO)
+   ========================================= */
+@media (max-width: 768px) {
+    /* Login */
+    .login-page-wrapper { flex-direction: column; }
+    .login-visual-side { display: none; }
+    .login-form-side { padding: 30px; }
+    
+    /* Cabecera y Menú Hamburguesa */
+    .header-top { padding: 15px; }
+    .header-message { display: none; } /* Oculta el mensaje largo para liberar espacio */
+    .menu-toggle { display: block; } /* Muestra el botón de hamburguesa */
+    
+    .header-bottom { padding: 0; }
+    .main-nav { 
+        display: none; /* Esconde el menú por defecto */
+        flex-direction: column; 
+        width: 100%; 
+        background: #050505; 
+        position: absolute; 
+        top: 100%; 
+        left: 0; 
+        z-index: 1000; 
+        border-bottom: 1px solid #333;
+    }
+    .main-nav.active { display: flex; } /* Lo muestra cuando tiene la clase active */
+    .nav-tab { text-align: center; padding: 15px; border-radius: 0; border-bottom: 1px solid #111; }
+    
+    /* Hero y Botones de Filtro */
+    .home-hero-banner h1 { font-size: 2rem; }
+    .filtros-tienda { flex-direction: column; gap: 10px; }
+    .filtros-tienda span { display: none; } /* Oculta la barrita vertical '|' */
+    .select-premium { width: 100%; margin-top: 10px; }
+    .btn-filtro { width: 100%; }
+
+    /* Ajuste texto de usuario */
+    #lblNombreUsuario { max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8rem; }
+}

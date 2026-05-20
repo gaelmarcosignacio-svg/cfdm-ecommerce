@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Premium - CFDM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f0f0f; color: #eaeaea; }
+        .admin-main-wrapper { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .admin-tabs-nav { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; }
+        .admin-tab-btn { background: #111; color: #888; border: 1px solid #333; padding: 12px 30px; border-radius: 5px; cursor: pointer; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .admin-tab-btn:hover, .admin-tab-btn.active { background: #c5a059; color: #000; border-color: #c5a059; }
+        .admin-seccion { display: none; }
+        .admin-seccion.active { display: block; }
+        .admin-container { max-width: 600px; margin: 0 auto 50px auto; background: #111; padding: 40px; border-radius: 8px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .admin-container h1 { color: #c5a059; margin-top: 0; margin-bottom: 10px; font-size: 2rem; text-transform: uppercase; letter-spacing: 3px; text-align: center; }
+        .admin-container p { color: #888; margin-bottom: 30px; text-align: center; font-size: 0.95rem; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #ccc; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; font-size: 1rem; background-color: #1a1a1a; color: white; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #c5a059; outline: none; background-color: #1f1f1f; }
+        .btn-submit { width: 100%; padding: 15px; background: #c5a059; color: #000; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-submit:hover { background: #d4af37; transform: translateY(-2px); }
+        .btn-cancel { width: 100%; padding: 12px; background: transparent; color: #aaa; border: 1px solid #444; border-radius: 5px; font-size: 1rem; cursor: pointer; margin-top: 15px; display: none; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-cancel:hover { background: #222; color: white; border-color: #666; }
+        .inventario-seccion h2 { color: #c5a059; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 30px; text-align: center; }
+        .item-inventario { background: #111; border: 1px solid #222; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .item-inventario:hover { border-color: #444; background: #141414; }
+        .item-info h4 { margin: 0 0 8px 0; color: white; text-transform: uppercase; letter-spacing: 1px; font-size: 1.1rem;}
+        .item-info p { margin: 0; font-size: 0.9rem; color: #999; }
+        .item-info strong { color: #c5a059; }
+        .item-acciones { display: flex; gap: 10px; }
+        .item-acciones button { border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; transition: 0.3s; }
+        .btn-editar { background: transparent; color: #f39c12; border: 1px solid #f39c12; }
+        .btn-editar:hover { background: #f39c12; color: white; }
+        .btn-borrar { background: transparent; color: #e74c3c; border: 1px solid #e74c3c; }
+        .btn-borrar:hover { background: #e74c3c; color: white; }
+        .alerta-stock { display: none; background: rgba(231, 76, 60, 0.1); border: 1px solid #e74c3c; border-left: 5px solid #e74c3c; color: #fff; padding: 20px; border-radius: 5px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2); }
+        .alerta-stock i { color: #e74c3c; font-size: 1.5rem; margin-right: 10px; vertical-align: middle; }
+        .tarjeta-pedido { background: #111; border: 1px solid #222; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+        .pedido-header { background: #0a0a0a; padding: 15px 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .pedido-header h3 { margin: 0; color: #c5a059; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .pedido-fecha { color: #888; font-size: 0.9rem; }
+        .pedido-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .pedido-info p { margin: 5px 0; color: #ccc; font-size: 0.95rem; }
+        .pedido-info strong { color: white; }
+        .pedido-productos { background: #1a1a1a; padding: 15px; border-radius: 5px; border: 1px solid #333; }
+        .pedido-productos h4 { margin: 0 0 10px 0; color: #c5a059; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .producto-lista { margin: 0; padding-left: 20px; color: #ccc; font-size: 0.9rem; }
+        .producto-lista li { margin-bottom: 5px; }
+        .pedido-total { padding: 15px 20px; background: #050505; border-top: 1px solid #333; text-align: right; font-size: 1.2rem; font-weight: bold; color: white; }
+        .pedido-total span { color: #c5a059; }
+        @media (max-width: 768px) {
+            .pedido-body { grid-template-columns: 1fr; }
+            .admin-tabs-nav { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-top">
+            <div class="header-message">
+                <span>Panel de Control - Acceso Restringido</span>
+            </div>
+            <div class="header-icons">
+                <div class="icon-wrapper" style="margin-left: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-user" id="iconoDefaultHeader" style="margin-right: 8px; color: white;"></i>
+                    <img id="imgPerfilHeader" src="" alt="Perfil" style="display: none; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; border: 1px solid #c5a059;">
+                    <a href="perfil.html" id="lblNombreUsuario" style="color: white; text-decoration: none; font-weight: bold; margin-right: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Mi Perfil</a>
+                    <button class="btn-logout-small" id="btnCerrarSesion">Salir</button>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <nav class="main-nav">
+                <a href="tienda.html" class="nav-tab">INICIO</a>
+                <a href="tienda.html" class="nav-tab">CURSOS</a>
+                <a href="tienda.html" class="nav-tab">TIENDA</a>
+                <a href="nosotros.html" class="nav-tab">QUIÉNES SOMOS</a>
+                <a href="#" class="nav-tab active admin-tab">PANEL ADMIN</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="admin-main-wrapper">
+        <div class="admin-tabs-nav">
+            <button class="admin-tab-btn active" id="btnTabInventario"><i class="fas fa-boxes"></i> Inventario</button>
+            <button class="admin-tab-btn" id="btnTabPedidos"><i class="fas fa-shopping-bag"></i> Lista de Pedidos</button>
+        </div>
+
+        <div id="seccionInventario" class="admin-seccion active">
+            <div class="admin-container">
+                <h1 id="tituloFormulario">Gestión de Inventario</h1>
+                <p id="subtituloFormulario">Agrega un nuevo elemento o edita uno existente en MongoDB.</p>
+
+                <form id="formAdminInventario" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" name="categoria" required>
+                            <option value="suplemento">Suplemento (Tienda)</option>
+                            <option value="farmaco">Fármaco</option>
+                            <option value="libro">Libro</option>
+                            <option value="curso">Programa Educativo (Cursos)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Título del Producto</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej. Proteína Whey 1kg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio (MXN)</label>
+                        <input type="number" id="precio" name="precio" placeholder="Ej. 850" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock">Stock Disponible</label>
+                        <input type="number" id="stock" name="stock" placeholder="Ej. 10" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagen">Imagen del Producto</label>
+                        <input type="file" id="imagen" name="imagen" accept="image/*">
+                        <small id="notaImagenEdit" style="display:none; color:#f39c12; font-weight:bold; margin-top:5px; display:block;">Opcional: Selecciona solo si quieres cambiar la imagen actual.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" rows="4" placeholder="Detalles técnicos..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" id="btnSubmitForm">Registrar Producto</button>
+                    <button type="button" class="btn-cancel" id="btnCancelarEdicion" onclick="cancelarEdicion()">Cancelar Edición</button>
+                </form>
+            </div>
+
+            <div class="inventario-seccion">
+                <h2>Inventario Actual</h2>
+                <div id="bannerAlertaStock" class="alerta-stock"></div>
+                <div id="listaInventario"><p style="color: #888; text-align:center;">Cargando inventario...</p></div>
+            </div>
+        </div>
+
+        <div id="seccionPedidos" class="admin-seccion">
+            <h2 style="color:#c5a059; text-transform:uppercase; letter-spacing:3px; text-align:center; margin-bottom:30px;">Órdenes de Compra</h2>
+            <div id="listaDePedidosContainer">
+                <p style="color: #888; text-align:center;">Cargando pedidos recientes...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sesion = JSON.parse(localStorage.getItem('sesionActiva'));
+        if (sesion && sesion.rol === 'admin') {
+            document.getElementById('lblNombreUsuario').textContent = sesion.nombre;
+            const iconoDefault = document.getElementById('iconoDefaultHeader');
+            const imgPerfil = document.getElementById('imgPerfilHeader');
+            if (sesion.fotoPerfil && sesion.fotoPerfil !== '') {
+                iconoDefault.style.display = 'none';
+                imgPerfil.src = sesion.fotoPerfil;
+                imgPerfil.style.display = 'block';
+            }
+        } else {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('btnCerrarSesion').addEventListener('click', () => {
+            localStorage.removeItem('sesionActiva');
+            window.location.href = 'index.html';
+        });
+
+        const btnTabInv = document.getElementById('btnTabInventario');
+        const btnTabPed = document.getElementById('btnTabPedidos');
+        const secInv = document.getElementById('seccionInventario');
+        const secPed = document.getElementById('seccionPedidos');
+
+        btnTabInv.addEventListener('click', () => {
+            btnTabInv.classList.add('active'); btnTabPed.classList.remove('active');
+            secInv.classList.add('active'); secPed.classList.remove('active');
+        });
+
+        btnTabPed.addEventListener('click', () => {
+            btnTabPed.classList.add('active'); btnTabInv.classList.remove('active');
+            secPed.classList.add('active'); secInv.classList.remove('active');
+            cargarListaPedidos(); 
+        });
+
+        let idProductoEditando = null;
+        document.addEventListener('DOMContentLoaded', cargarInventario);
+
+        async function cargarInventario() {
+            try {
+                // MODIFICADO PARA LA NUBE
+                const respuesta = await fetch('/api/productos');
+                const productos = await respuesta.json();
+                const contenedor = document.getElementById('listaInventario');
+                const bannerStock = document.getElementById('bannerAlertaStock'); 
+
+                if (productos.length === 0) {
+                    contenedor.innerHTML = '<p style="color: #888; text-align:center;">El inventario está vacío.</p>';
+                    bannerStock.style.display = 'none';
+                    return;
+                }
+
+                contenedor.innerHTML = '';
+                let itemsAgotadosOLow = 0;
+                let nombresAgotados = [];
+
+                productos.forEach(producto => {
+                    if (producto.stock <= 5) {
+                        itemsAgotadosOLow++;
+                        if(producto.stock === 0) {
+                            nombresAgotados.push(`<strong>${producto.nombre}</strong> (Agotado)`);
+                        } else {
+                            nombresAgotados.push(`<strong>${producto.nombre}</strong> (Quedan ${producto.stock})`);
+                        }
+                    }
+
+                    const prodJSON = encodeURIComponent(JSON.stringify(producto));
+                    const colorStock = producto.stock <= 5 ? '#e74c3c' : '#c5a059';
+
+                    contenedor.innerHTML += `
+                        <div class="item-inventario">
+                            <div class="item-info">
+                                <h4>${producto.nombre}</h4>
+                                <p>Categoría: <strong>${producto.categoria}</strong> | Precio: <strong>$${producto.precio}</strong> | Stock: <strong style="color: ${colorStock};">${producto.stock}</strong></p>
+                            </div>
+                            <div class="item-acciones">
+                                <button class="btn-editar" onclick="prepararEdicion('${prodJSON}')"><i class="fas fa-edit"></i></button>
+                                <button class="btn-borrar" onclick="eliminarProducto('${producto._id}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                if (itemsAgotadosOLow > 0) {
+                    bannerStock.style.display = 'block';
+                    bannerStock.innerHTML = `
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <span style="font-size: 1.1rem;">¡Atención! Tienes <strong>${itemsAgotadosOLow}</strong> producto(s) con stock crítico.</span>
+                        <p style="margin: 10px 0 0 35px; font-size: 0.9rem; color: #ccc;">${nombresAgotados.join(', ')}</p>
+                    `;
+                } else {
+                    bannerStock.style.display = 'none';
+                }
+
+            } catch (error) { document.getElementById('listaInventario').innerHTML = '<p style="color:#e74c3c; text-align:center;">Error de conexión.</p>'; }
+        }
+
+        function prepararEdicion(productoJSONCodificado) {
+            const producto = JSON.parse(decodeURIComponent(productoJSONCodificado));
+            idProductoEditando = producto._id;
+            document.getElementById('categoria').value = producto.categoria;
+            document.getElementById('nombre').value = producto.nombre;
+            document.getElementById('precio').value = producto.precio;
+            document.getElementById('stock').value = producto.stock;
+            document.getElementById('descripcion').value = producto.descripcion;
+            
+            document.getElementById('tituloFormulario').textContent = 'Editar Elemento';
+            document.getElementById('btnSubmitForm').textContent = 'Guardar Cambios';
+            document.getElementById('btnSubmitForm').style.background = '#f39c12'; 
+            document.getElementById('btnCancelarEdicion').style.display = 'block';
+            document.getElementById('notaImagenEdit').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelarEdicion() {
+            idProductoEditando = null;
+            document.getElementById('formAdminInventario').reset();
+            document.getElementById('tituloFormulario').textContent = 'Gestión de Inventario';
+            document.getElementById('btnSubmitForm').textContent = 'Registrar Producto';
+            document.getElementById('btnSubmitForm').style.background = '#c5a059'; 
+            document.getElementById('btnCancelarEdicion').style.display = 'none';
+            document.getElementById('notaImagenEdit').style.display = 'none';
+        }
+
+        async function eliminarProducto(id) {
+            if (!confirm('¿Eliminar producto definitivamente?')) return;
+            try {
+                // MODIFICADO PARA LA NUBE
+                const res = await fetch(`/api/productos/${id}`, { method: 'DELETE' });
+                if (res.ok) cargarInventario(); 
+            } catch (error) { console.error(error); }
+        }
+
+        document.getElementById('formAdminInventario').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            try {
+                // MODIFICADO PARA LA NUBE
+                let url = '/api/productos';
+                let metodo = 'POST';
+                if (idProductoEditando) { url = `/api/productos/${idProductoEditando}`; metodo = 'PUT'; }
+                const res = await fetch(url, { method: metodo, body: formData });
+                if (res.ok) {
+                    alert(idProductoEditando ? '✅ Actualizado' : '✅ Registrado');
+                    cancelarEdicion(); cargarInventario();
+                } else alert('🔴 Error al guardar.');
+            } catch (error) { console.error(error); }
+        });
+
+        async function cargarListaPedidos() {
+            const contenedor = document.getElementById('listaDePedidosContainer');
+            try {
+                // MODIFICADO PARA LA NUBE
+                const respuesta = await fetch('/api/pedidos');
+                const pedidos = await respuesta.json();
+
+                if (pedidos.length === 0) {
+                    contenedor.innerHTML = '<p style="color: #888; text-align:center;">No hay pedidos registrados aún.</p>';
+                    return;
+                }
+
+                contenedor.innerHTML = '';
+                pedidos.forEach(pedido => {
+                    let fechaFormateada = 'Fecha no disponible';
+                    if (pedido.fecha) {
+                        try { fechaFormateada = new Date(pedido.fecha).toLocaleString(); } catch(e){}
+                    }
+
+                    let listaProductosHTML = '';
+                    if (pedido.productos && pedido.productos.length > 0) {
+                        pedido.productos.forEach(prod => {
+                            listaProductosHTML += `<li>${prod.nombre} - $${prod.precio} MXN</li>`;
+                        });
+                    } else {
+                        listaProductosHTML = '<li>Sin detalles de productos</li>';
+                    }
+
+                    contenedor.innerHTML += `
+                        <div class="tarjeta-pedido">
+                            <div class="pedido-header">
+                                <h3><i class="fas fa-box-open"></i> Pedido #${pedido._id.substring(18)}</h3>
+                                <span class="pedido-fecha">${fechaFormateada}</span>
+                            </div>
+                            <div class="pedido-body">
+                                <div class="pedido-info">
+                                    <p><i class="fas fa-user"></i> Cliente: <strong>${pedido.nombreCliente || 'N/A'}</strong></p>
+                                    <p><i class="fas fa-envelope"></i> Correo: <strong>${pedido.usuario || 'N/A'}</strong></p>
+                                    <p><i class="fas fa-phone"></i> Teléfono: <strong>${pedido.telefono || 'N/A'}</strong></p>
+                                    <p><i class="fas fa-map-marker-alt"></i> Dirección: <strong>${pedido.direccion || 'N/A'}</strong></p>
+                                </div>
+                                <div class="pedido-productos">
+                                    <h4>Artículos Comprados:</h4>
+                                    <ul class="producto-lista">
+                                        ${listaProductosHTML}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="pedido-total">
+                                Total a cobrar: <span>$${pedido.total} MXN</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error(error);
+                contenedor.innerHTML = '<p style="color:#e74c3c; text-align:center;">Error al cargar la lista de pedidos desde la base de datos.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

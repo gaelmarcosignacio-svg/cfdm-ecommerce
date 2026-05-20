@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - CFDM Fitness</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="login-page-wrapper">
+        <div class="login-visual-side" style="background-image: url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1920');">
+            <div class="visual-overlay"></div>
+            <div class="visual-content">
+                <h1 class="logo-grandota">CFDM</h1>
+                <p>Únete a nuestra comunidad de campeones</p>
+                <span class="poweed-by">Alcanza tu máximo nivel</span>
+            </div>
+        </div>
+
+        <div class="login-form-side">
+            <div class="form-content-wrapper">
+                
+                <div class="form-header">
+                    <h2>Crear una cuenta</h2>
+                    <p>Ingresa tus datos para registrarte en la plataforma.</p>
+                </div>
+
+                <form id="registroForm">
+                    <div class="modern-input-group">
+                        <label for="regNombre"><i class="fas fa-user"></i> Nombre Completo</label>
+                        <input type="text" id="regNombre" placeholder="Ej. Juan Pérez" required>
+                    </div>
+
+                    <div class="modern-input-group">
+                        <label for="regCorreo"><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                        <input type="email" id="regCorreo" placeholder="tu@correo.com" required>
+                    </div>
+
+                    <div class="modern-input-group">
+                        <label for="regPassword"><i class="fas fa-lock"></i> Contraseña</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="regPassword" placeholder="••••••••" required>
+                            <i class="fas fa-eye toggle-password" id="btnToggleRegPassword"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-modern-login">Registrarme</button>
+                </form>
+                
+                <div class="form-footer">
+                    <p>¿Ya tienes cuenta? <a href="index.html">Inicia Sesión aquí</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA DEL OJO (MOSTRAR/OCULTAR CONTRASEÑA) ---
+        const btnToggle = document.getElementById('btnToggleRegPassword');
+        const inputPassword = document.getElementById('regPassword');
+
+        btnToggle.addEventListener('click', function () {
+            const type = inputPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            inputPassword.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // --- LÓGICA DE REGISTRO HACIA MONGODB ---
+        document.getElementById('registroForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('regNombre').value;
+            const correo = document.getElementById('regCorreo').value;
+            const password = document.getElementById('regPassword').value;
+
+            try {
+                const respuesta = await fetch('/api/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, correo, password })
+                });
+
+                const data = await respuesta.json();
+
+                if (respuesta.ok) {
+                    alert('✅ ¡Registro exitoso! Ya puedes iniciar sesión con tu nueva cuenta.');
+                    window.location.href = 'index.html'; // Te regresa al login
+                } else {
+                    alert('🔴 Error: ' + data.mensaje);
+                }
+            } catch (error) {
+                console.error(error);
+                alert('🔴 Error de conexión con el servidor. Revisa que esté encendido.');
+            }
+        });
+    </script>
+</body>
+</html>

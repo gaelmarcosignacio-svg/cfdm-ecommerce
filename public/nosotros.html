@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos - Premium - CFDM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ESTILOS ESPECÍFICOS PARA ESTA PÁGINA (MANTENIENDO EL MODO OSCURO PREMIUM) */
+        
+        /* 1. Hero Section de Nosotros */
+        .nosotros-hero {
+            background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(0,0,0,0.95)), 
+                        url('https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1470') center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 1px solid #222;
+        }
+        .nosotros-hero h1 {
+            color: #c5a059;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .nosotros-hero p {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+            letter-spacing: 1px;
+        }
+
+        /* 2. Sección de Historia (Diseño Split: Texto + Imagen) */
+        .seccion-historia {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .historia-texto {
+            flex: 1;
+            min-width: 300px;
+        }
+        .historia-texto h2 {
+            color: #c5a059;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .historia-texto p {
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        .historia-texto strong {
+            color: white;
+        }
+        .historia-imagen {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470') center/cover;
+            border-radius: 5px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: border-color 0.3s;
+        }
+        .historia-imagen:hover {
+            border-color: #c5a059;
+        }
+
+        /* 3. Sección de Misión y Visión (Tarjetas oscuras) */
+        .seccion-mv {
+            background-color: #0a0a0a;
+            padding: 80px 20px;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+        .contenedor-mv {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .tarjeta-mv {
+            flex: 1;
+            min-width: 300px;
+            background: #111;
+            padding: 40px;
+            border-radius: 5px;
+            border: 1px solid #222;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .tarjeta-mv:hover {
+            transform: translateY(-5px);
+            border-color: #c5a059;
+            background-color: #141414;
+        }
+        .tarjeta-mv i {
+            font-size: 3rem;
+            color: #c5a059;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        .tarjeta-mv h3 {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .tarjeta-mv p {
+            color: #999;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* 4. Sección de Valores o Pilares (Grid elegante) */
+        .seccion-pilares {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .seccion-pilares h2 {
+            color: #c5a059;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 2rem;
+            margin-bottom: 50px;
+        }
+        .grid-pilares {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .pilar-item {
+            background: #111;
+            padding: 30px;
+            border-radius: 5px;
+            border: 1px solid #222;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        .pilar-item:hover {
+            border-color: #c5a059;
+        }
+        .pilar-icono-wrap {
+            width: 80px; height: 80px;
+            background: #0a0a0a;
+            border-radius: 50%;
+            border: 1px solid #333;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+            color: #c5a059;
+            font-size: 2rem;
+            transition: 0.3s;
+        }
+        .pilar-item:hover .pilar-icono-wrap {
+            background-color: #c5a059;
+            color: #000;
+            border-color: #c5a059;
+        }
+        .pilar-item h4 {
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+        }
+        .pilar-item p {
+            color: #888;
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .nosotros-hero h1 { font-size: 2.2rem; }
+            .historia-imagen { height: 250px; }
+            .seccion-historia { gap: 30px; padding: 50px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-top">
+            <div class="header-message">
+                <span>Centro de Farmacología Deportiva Mexicana - Excelencia Científica</span>
+            </div>
+            <div class="header-icons">
+                <div class="icon-wrapper" style="margin-left: 10px; display: flex; align-items: center;">
+                    <i class="fas fa-user" id="iconoDefaultHeader" style="margin-right: 8px; color: white;"></i>
+                    <img id="imgPerfilHeader" src="" alt="Perfil" style="display: none; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 8px; border: 1px solid #c5a059;">
+                    <a href="perfil.html" id="lblNombreUsuario" style="color: white; text-decoration: none; font-weight: bold; margin-right: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Mi Perfil</a>
+                    <button class="btn-logout-small" id="btnCerrarSesion">Salir</button>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <nav class="main-nav">
+                <a href="tienda.html" class="nav-tab">INICIO</a>
+                <a href="tienda.html" class="nav-tab">CURSOS</a>
+                <a href="tienda.html" class="nav-tab">TIENDA</a>
+                <a href="#" class="nav-tab active">QUIÉNES SOMOS</a>
+                <a href="admin.html" class="nav-tab admin-tab" id="tabAdmin" style="display: none;">PANEL ADMIN</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="nosotros-hero">
+        <h1>NUESTRA ESENCIA</h1>
+        <p>Ciencia, transparencia y pasión dedicadas a potenciar tu rendimiento físico al máximo nivel.</p>
+    </section>
+
+    <section class="seccion-historia">
+        <div class="historia-texto">
+            <h2>Nuestra Historia</h2>
+            <p>El <strong>Centro de Farmacología Deportiva Mexicana (CFDM)</strong> nació de la necesidad de cerrar la brecha entre la ciencia médica y el entrenamiento de alto rendimiento en México. Fundado por el señor Juan Carlos Figueroa "El Farmacologo".</p>
+            <p>Decidimos crear una plataforma que no solo ofreciera suplementos y herramientas de vanguardia, sino que también funcionara como un faro de <strong>conocimiento certificado y seguro</strong>. Hoy en día, somos un referente para atletas y preparadores físicos que buscan resultados reales respaldados por la evidencia científica, cuidando siempre la salud integral del deportista.</p>
+        </div>
+        <div class="historia-imagen"></div>
+    </section>
+
+    <section class="seccion-mv">
+        <div class="contenedor-mv">
+            <div class="tarjeta-mv">
+                <i class="fas fa-bullseye"></i>
+                <h3>Nuestra Misión</h3>
+                <p>Proveer a la comunidad deportiva mexicana soluciones farmacológicas y educativas de la más alta calidad, basadas estrictamente en la evidencia científica, para optimizar el rendimiento y la recuperación de forma segura, ética y responsable.</p>
+            </div>
+            <div class="tarjeta-mv">
+                <i class="fas fa-eye"></i>
+                <h3>Nuestra Visión</h3>
+                <p>Ser reconocidos como la institución líder y más confiable en farmacología deportiva en América Latina, estableciendo los estándares de oro en educación, calidad de producto y acompañamiento profesional para el atleta moderno.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-pilares">
+        <h2>Nuestros Pilares</h2>
+        <div class="grid-pilares">
+            <div class="pilar-item">
+                <div class="pilar-icono-wrap"><i class="fas fa-microscope"></i></div>
+                <h4>Rigor Científico</h4>
+                <p>Cada producto y curso en nuestra plataforma ha pasado por un estricto filtro de revisión basado en los últimos estudios bioquímicos y clínicos.</p>
+            </div>
+            <div class="pilar-item">
+                <div class="pilar-icono-wrap"><i class="fas fa-award"></i></div>
+                <h4>Calidad Premium</h4>
+                <p>Trabajamos exclusivamente con laboratorios certificados internacionalmente, garantizando pureza, potencia y seguridad en cada lote.</p>
+            </div>
+            <div class="pilar-item">
+                <div class="pilar-icono-wrap"><i class="fas fa-handshake"></i></div>
+                <h4>Transparencia Total</h4>
+                <p>Creemos en la honestidad radical. Te proporcionamos toda la información técnica y los riesgos, sin letras chiquitas ni falsas promesas.</p>
+            </div>
+            <div class="pilar-item">
+                <div class="pilar-icono-wrap"><i class="fas fa-user-shield"></i></div>
+                <h4>Ética y Salud</h4>
+                <p>Tu salud está por encima de cualquier marca. Promovemos el uso responsable y educado, priorizando siempre la integridad física del atleta.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-contact">
+        <h3>CONTÁCTANOS</h3>
+        <div class="social-links">
+            <a href="https://www.facebook.com/people/Centro-de-Farmacologia-Deportiva-Mexicana/61560281514265/" target="_blank">
+                <i class="fab fa-facebook"></i> Centro de Farmacologia Deportiva Mexicana
+            </a>
+            <a href="https://www.instagram.com/cfdm.farmacologia/" target="_blank">
+                <i class="fab fa-instagram"></i> cfdm.farmacologia
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const sesion = JSON.parse(localStorage.getItem('sesionActiva'));
+        if (sesion) {
+            document.getElementById('lblNombreUsuario').textContent = sesion.nombre;
+            const iconoDefault = document.getElementById('iconoDefaultHeader');
+            const imgPerfil = document.getElementById('imgPerfilHeader');
+            if (sesion.fotoPerfil && sesion.fotoPerfil !== '') {
+                iconoDefault.style.display = 'none';
+                imgPerfil.src = sesion.fotoPerfil;
+                imgPerfil.style.display = 'block';
+            }
+            if (sesion.rol === 'admin') document.getElementById('tabAdmin').style.display = 'block';
+        } else {
+            window.location.href = 'index.html';
+        }
+        document.getElementById('btnCerrarSesion').addEventListener('click', () => {
+            localStorage.removeItem('sesionActiva');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

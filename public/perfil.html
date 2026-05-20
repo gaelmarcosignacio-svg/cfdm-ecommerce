@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil Premium - CFDM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ESTILOS ESPECÍFICOS PARA EL PERFIL REDISEÑADO (MODO OSCURO PREMIUM) */
+        body { background-color: #0f0f0f; color: #eaeaea; }
+
+        #mainPerfil {
+            max-width: 900px; margin: 0 auto; padding: 60px 20px;
+        }
+
+        /* Tarjeta Principal del Perfil */
+        .profile-card {
+            background: #111; border: 1px solid #222; border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); overflow: hidden;
+        }
+
+        /* Sección Superior: Foto y Nombre */
+        .profile-header {
+            background: #0a0a0a; padding: 40px; text-align: center;
+            border-bottom: 1px solid #222; position: relative;
+        }
+        
+        .avatar-wrapper {
+            position: relative; width: 150px; height: 150px; margin: 0 auto 20px auto;
+        }
+        .profile-header img {
+            width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
+            border: 3px solid #c5a059; box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+        }
+        /* Icono de cámara para cambiar foto */
+        .change-photo-btn {
+            position: absolute; bottom: 5px; right: 5px; background: #c5a059;
+            color: #000; width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: 2px solid #0a0a0a; transition: 0.3s;
+        }
+        .change-photo-btn:hover { transform: scale(1.1); background: #d4af37; }
+
+        .profile-header h1 {
+            color: white; text-transform: uppercase; letter-spacing: 3px;
+            margin: 0 0 5px 0; font-size: 2rem;
+        }
+        .profile-header p {
+            color: #c5a059; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 2px; font-size: 0.9rem; margin: 0;
+        }
+
+        /* Sección Inferior: Formulario Organizado */
+        .profile-body { padding: 40px; }
+        
+        .profile-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;
+        }
+
+        /* Sub-tarjetas de información */
+        .info-group-card {
+            background: #161616; border: 1px solid #2a2a2a; padding: 25px; border-radius: 8px;
+        }
+        .info-group-card h3 {
+            color: #c5a059; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 1.1rem; margin-top: 0; margin-bottom: 20px;
+            border-bottom: 1px solid #333; padding-bottom: 10px;
+        }
+
+        /* Estilos de inputs unificados */
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; color: #aaa; font-size: 0.8rem;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px; background: #1f1f1f; border: 1px solid #333;
+            border-radius: 5px; color: white; font-size: 1rem; box-sizing: border-box;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #c5a059; outline: none; background: #252525;
+        }
+        /* Input deshabilitado (correo) */
+        .form-group input[disabled] { background: #0a0a0a; color: #666; cursor: not-allowed; border-color: #222; }
+
+        /* Botón de guardar */
+        .btn-guardar-perfil {
+            width: 100%; padding: 15px; background: #c5a059; color: #000;
+            border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-guardar-perfil:hover { background: #d4af37; transform: translateY(-2px); }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .profile-grid { grid-template-columns: 1fr; }
+            .profile-header h1 { font-size: 1.6rem; }
+            .profile-body { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-top">
+            <div class="header-message">
+                <span>Centro de Farmacología Deportiva Mexicana - Tu Perfil Exclusivo</span>
+            </div>
+            <div class="header-icons">
+                <div class="icon-wrapper" style="margin-left: 10px; display: flex; align-items: center;">
+                    <button class="btn-logout-small" id="btnCerrarSesion">Salir</button>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <nav class="main-nav">
+                <a href="tienda.html" class="nav-tab">INICIO</a>
+                <a href="tienda.html" class="nav-tab">CURSOS</a>
+                <a href="tienda.html" class="nav-tab">TIENDA</a>
+                <a href="nosotros.html" class="nav-tab">QUIÉNES SOMOS</a>
+                <a href="admin.html" class="nav-tab admin-tab" id="tabAdmin" style="display: none;">PANEL ADMIN</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="mainPerfil">
+        <form id="formMiperfil" enctype="multipart/form-data">
+            <div class="profile-card">
+                
+                <div class="profile-header">
+                    <div class="avatar-wrapper">
+                        <img id="imgPerfilPagina" src="https://via.placeholder.com/150" alt="Foto de Perfil">
+                        <label for="fotoPerfil" class="change-photo-btn">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                        <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*" style="display: none;">
+                    </div>
+                    <h1 id="txtNombreGrande">Cargando...</h1>
+                    <p id="txtRolGrande">Atleta CFDM</p>
+                </div>
+
+                <div class="profile-body">
+                    <div class="profile-grid">
+                        
+                        <div class="info-group-card">
+                            <h3><i class="fas fa-user-circle"></i> Datos Personales</h3>
+                            <div class="form-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Correo Electrónico (No editable)</label>
+                                <input type="email" id="correo" disabled>
+                            </div>
+                        </div>
+
+                        <div class="info-group-card">
+                            <h3><i class="fas fa-map-marker-alt"></i> Contacto y Envío</h3>
+                            <div class="form-group">
+                                <label>Teléfono WhatsApp</label>
+                                <input type="text" id="telefono" name="telefono" placeholder="Ej. 229 123 4567">
+                            </div>
+                            <div class="form-group">
+                                <label>Dirección de Envío Completa</label>
+                                <textarea id="direccion" name="direccion" rows="3" placeholder="Calle, Número, Colonia, Ciudad, Estado, CP..."></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn-guardar-perfil">
+                        <i class="fas fa-save"></i> Guardar Cambios en mi Perfil
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        const sesion = JSON.parse(localStorage.getItem('sesionActiva'));
+        if (!sesion) { window.location.href = 'index.html'; }
+
+        // --- 1. CARGAR DATOS EN EL NUEVO DISEÑO ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Rellenar inputs
+            document.getElementById('nombre').value = sesion.nombre;
+            document.getElementById('correo').value = sesion.correo;
+            document.getElementById('telefono').value = sesion.telefono || '';
+            document.getElementById('direccion').value = sesion.direccion || '';
+            
+            // Rellenar cabecera grande
+            document.getElementById('txtNombreGrande').textContent = sesion.nombre;
+            document.getElementById('txtRolGrande').textContent = sesion.rol === 'admin' ? 'Administrador del Sistema' : 'Atleta CFDM';
+
+            // Cargar foto si existe
+            if (sesion.fotoPerfil && sesion.fotoPerfil !== '') {
+                document.getElementById('imgPerfilPagina').src = sesion.fotoPerfil;
+            }
+
+            if (sesion.rol === 'admin') { document.getElementById('tabAdmin').style.display = 'block'; }
+        });
+
+        // --- 2. PREVISUALIZAR FOTO ANTES DE GUARDAR (MEJORA) ---
+        document.getElementById('fotoPerfil').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(ex) {
+                    document.getElementById('imgPerfilPagina').src = ex.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        // --- 3. ENVIAR ACTUALIZACIÓN AL BACKEND (SE MANTIENE IGUAL) ---
+        document.getElementById('formMiperfil').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            try {
+                const respuesta = await fetch('/api/usuarios/' + sesion.correo, {
+                    method: 'PUT',
+                    body: formData // Mandamos FormData (texto + imagen)
+                });
+
+                if (respuesta.ok) {
+                    const datosJSON = await respuesta.json();
+                    // Actualizar localStorage con los nuevos datos devueltos por el servidor
+                    localStorage.setItem('sesionActiva', JSON.stringify(datosJSON.usuario));
+                    alert('✅ Perfil actualizado exitosamente.');
+                    location.reload(); // Recargar para ver cambios
+                } else { alert('🔴 Error al actualizar el perfil.'); }
+            } catch (error) { console.error(error); }
+        });
+
+        document.getElementById('btnCerrarSesion').addEventListener('click', () => {
+            localStorage.removeItem('sesionActiva');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
