@@ -21,9 +21,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// --- CONFIGURACIÓN DEL CORREO (ACTUALIZADA PARA RENDER) ---
+// --- CONFIGURACIÓN DEL CORREO (TÚNEL SEGURO PARA RENDER) ---
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465, // <-- Puerto seguro que Render sí permite
+    secure: true, // <-- Fuerza el uso de SSL
     auth: {
         user: process.env.EMAIL_USER, 
         pass: process.env.EMAIL_PASS                    
