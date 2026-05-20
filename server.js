@@ -21,12 +21,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// --- CONFIGURACIÓN DEL CORREO ---
+// --- CONFIGURACIÓN DEL CORREO (ACTUALIZADA PARA RENDER) ---
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'farmacologiadeportiva26@gmail.com', 
-        pass: 'drjhadarfutyhwrv'                   
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS                    
     }
 });
 
