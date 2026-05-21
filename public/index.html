@@ -53,7 +53,7 @@
     </div>
 
     <script>
-        // --- LÓGICA DEL OJO (MOSTRAR/OCULTAR CONTRASEÑA) ---
+        //  (MOSTRAR/OCULTAR CONTRASEÑA) ---
         const btnToggle = document.getElementById('btnTogglePassword');
         const inputPassword = document.getElementById('password');
 
@@ -67,7 +67,7 @@
             this.classList.toggle('fa-eye-slash');
         });
 
-        // --- LÓGICA DE LOGIN (YA EXISTENTE) ---
+        // --- LÓGICA DE LOGIN  ---
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const correo = document.getElementById('correo').value;

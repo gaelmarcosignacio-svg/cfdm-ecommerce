@@ -214,7 +214,7 @@
             }
         });
 
-        // --- 3. ENVIAR ACTUALIZACIÓN AL BACKEND (SE MANTIENE IGUAL) ---
+        // --- 3. ENVIAR ACTUALIZACIÓN AL BACKEND  ---
         document.getElementById('formMiperfil').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
@@ -222,7 +222,7 @@
             try {
                 const respuesta = await fetch('/api/usuarios/' + sesion.correo, {
                     method: 'PUT',
-                    body: formData // Mandamos FormData (texto + imagen)
+                    body: formData 
                 });
 
                 if (respuesta.ok) {

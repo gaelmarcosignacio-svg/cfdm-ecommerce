@@ -1,4 +1,4 @@
-// Eliminamos la vieja base de datos simulada
+
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
 const showRegisterBtn = document.getElementById('showRegister');
@@ -28,7 +28,7 @@ loginForm.addEventListener('submit', async (e) => {
     const errorMessage = document.getElementById('errorMessage');
 
     try {
-        // Disparamos la petición al backend
+        
         const respuesta = await fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -39,7 +39,7 @@ loginForm.addEventListener('submit', async (e) => {
         const datos = await respuesta.json();
 
         if (respuesta.ok) {
-            // Si el servidor da luz verde, guardamos la sesión (sin la contraseña por seguridad)
+            
             localStorage.setItem('sesionActiva', JSON.stringify(datos.usuario));
             window.location.href = 'tienda.html'; 
         } else {

@@ -7,7 +7,7 @@ const usuarioSchema = new mongoose.Schema({
     rol: { type: String, default: 'cliente' },
     telefono: { type: String, default: '' }, 
     direccion: { type: String, default: '' },
-    fotoPerfil: { type: String, default: '' } // <-- NUEVO CAMPO PARA LA FOTO
+    fotoPerfil: { type: String, default: '' } 
 });
 
 module.exports = mongoose.model('Usuario', usuarioSchema);
